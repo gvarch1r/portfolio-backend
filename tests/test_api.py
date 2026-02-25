@@ -74,3 +74,31 @@ async def test_unauthorized_access(client: AsyncClient):
     """Test that tasks require authentication."""
     response = await client.get("/api/v1/tasks")
     assert response.status_code == 401
+
+
+@pytest.mark.asyncio
+async def test_ai_chat_without_key(client: AsyncClient, auth_headers: dict):
+    """Test AI chat returns error when OPENAI_API_KEY is not set."""
+    response = await client.post(
+        "/api/v1/ai/chat",
+        json={"message": "Hello"},
+        headers=auth_headers,
+    )
+    assert response.status_code == 200
+    data = response.json()
+    assert "response" in data
+    assert "OPENAI_API_KEY" in data["response"]
+
+
+@pytest.mark.asyncio
+async def test_ai_ask_without_key(client: AsyncClient, auth_headers: dict):
+    """Test AI ask returns error when OPENAI_API_KEY is not set."""
+    response = await client.post(
+        "/api/v1/ai/ask",
+        json={"question": "Как запустить API?"},
+        headers=auth_headers,
+    )
+    assert response.status_code == 200
+    data = response.json()
+    assert "answer" in data
+    assert "OPENAI_API_KEY" in data["answer"]

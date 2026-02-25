@@ -1,7 +1,7 @@
 # Portfolio API
 
-Backend-проект для портфолио: REST API с авторизацией, CRUD для задач.  
-Docker, CI/CD (GitHub Actions). Планируется: AI (RAG/LLM).
+Backend-проект для портфолио: REST API с авторизацией, CRUD для задач, AI (чат + RAG).  
+Docker, CI/CD (GitHub Actions).
 
 ## Стек
 
@@ -10,6 +10,7 @@ Docker, CI/CD (GitHub Actions). Планируется: AI (RAG/LLM).
 - **SQLAlchemy 2.0** — ORM (async)
 - **SQLite** / **PostgreSQL** — БД
 - **JWT** — авторизация
+- **OpenAI API** — LLM (чат, RAG)
 - **Docker** — контейнеризация
 - **GitHub Actions** — CI/CD
 
@@ -57,6 +58,10 @@ SECRET_KEY=your-secret-key
 DEBUG=false
 DATABASE_URL=sqlite+aiosqlite:///./portfolio.db
 ACCESS_TOKEN_EXPIRE_MINUTES=30
+
+# AI (опционально, для /api/v1/ai/*)
+OPENAI_API_KEY=sk-...
+OPENAI_MODEL=gpt-4o-mini
 ```
 
 ## API Endpoints
@@ -64,6 +69,10 @@ ACCESS_TOKEN_EXPIRE_MINUTES=30
 ### Auth
 - `POST /api/v1/auth/register` — регистрация
 - `POST /api/v1/auth/login` — вход (получить JWT)
+
+### AI (требуется авторизация + OPENAI_API_KEY)
+- `POST /api/v1/ai/chat` — чат с LLM
+- `POST /api/v1/ai/ask` — RAG: вопрос по документации проекта
 
 ### Tasks (требуется авторизация)
 - `GET /api/v1/tasks` — список задач
@@ -89,7 +98,8 @@ portfolio-backend/
 │   ├── auth.py          # JWT, хеширование
 │   ├── models/          # SQLAlchemy модели
 │   ├── schemas/         # Pydantic схемы
-│   └── routers/         # API роутеры
+│   ├── routers/         # API роутеры
+│   └── ai/              # LLM, RAG
 ├── .github/workflows/   # CI/CD
 ├── tests/
 ├── Dockerfile
@@ -110,7 +120,7 @@ portfolio-backend/
 
 - [x] Этап 1: Backend (REST API, CRUD, JWT)
 - [x] Этап 2: DevOps (Docker, CI/CD)
-- [ ] Этап 3: AI (ML, RAG, LLM)
+- [x] Этап 3: AI (чат, RAG)
 
 ## Лицензия
 

@@ -1,3 +1,4 @@
+from pydantic import ConfigDict
 from pydantic_settings import BaseSettings
 
 
@@ -11,8 +12,11 @@ class Settings(BaseSettings):
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
     DATABASE_URL: str = "sqlite+aiosqlite:///./portfolio.db"
 
-    class Config:
-        env_file = ".env"
+    # AI
+    OPENAI_API_KEY: str = ""
+    OPENAI_MODEL: str = "gpt-4o-mini"
+
+    model_config = ConfigDict(env_file=".env")
 
 
 settings = Settings()

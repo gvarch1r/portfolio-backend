@@ -29,3 +29,6 @@ htmlcov/
 dist/
 build/
 *.egg-info/
+
+# AI
+chroma_db/
