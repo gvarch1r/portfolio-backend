@@ -1,16 +1,17 @@
 # Portfolio API
 
 Backend-проект для портфолио: REST API с авторизацией, CRUD для задач.  
-Планируется расширение: Docker, CI/CD, AI (RAG/LLM).
+Docker, CI/CD (GitHub Actions). Планируется: AI (RAG/LLM).
 
 ## Стек
 
 - **Python 3.11+**
 - **FastAPI** — веб-фреймворк
 - **SQLAlchemy 2.0** — ORM (async)
-- **SQLite** — БД (для продакшена можно PostgreSQL)
+- **SQLite** / **PostgreSQL** — БД
 - **JWT** — авторизация
-- **Pydantic** — валидация
+- **Docker** — контейнеризация
+- **GitHub Actions** — CI/CD
 
 ## Установка
 
@@ -30,8 +31,16 @@ pip install -r requirements.txt
 
 ## Запуск
 
+### Локально (SQLite)
+
 ```bash
 uvicorn app.main:app --reload
+```
+
+### Docker Compose (PostgreSQL)
+
+```bash
+docker compose up --build
 ```
 
 API будет доступен по адресу: http://127.0.0.1:8000
@@ -81,15 +90,26 @@ portfolio-backend/
 │   ├── models/          # SQLAlchemy модели
 │   ├── schemas/         # Pydantic схемы
 │   └── routers/         # API роутеры
+├── .github/workflows/   # CI/CD
 ├── tests/
+├── Dockerfile
+├── docker-compose.yml
 ├── requirements.txt
 └── README.md
 ```
 
+## CI/CD
+
+При каждом push в `main` GitHub Actions запускает:
+
+- **test** — pytest на Python 3.11 и 3.12
+- **lint** — ruff
+- **docker** — сборка Docker-образа
+
 ## Roadmap
 
 - [x] Этап 1: Backend (REST API, CRUD, JWT)
-- [ ] Этап 2: DevOps (Docker, CI/CD, деплой)
+- [x] Этап 2: DevOps (Docker, CI/CD)
 - [ ] Этап 3: AI (ML, RAG, LLM)
 
 ## Лицензия
