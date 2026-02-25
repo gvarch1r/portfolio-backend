@@ -18,7 +18,7 @@ Docker, CI/CD (GitHub Actions).
 
 ```bash
 # Клонировать репозиторий
-git clone https://github.com/YOUR_USERNAME/portfolio-backend.git
+git clone https://github.com/gvarch1r/portfolio-backend.git
 cd portfolio-backend
 
 # Создать виртуальное окружение
@@ -80,6 +80,26 @@ OPENAI_MODEL=gpt-4o-mini
 - `GET /api/v1/tasks/{id}` — получить задачу
 - `PATCH /api/v1/tasks/{id}` — обновить задачу
 - `DELETE /api/v1/tasks/{id}` — удалить задачу
+
+### Пример запросов (curl)
+
+```bash
+# Регистрация
+curl -X POST http://127.0.0.1:8000/api/v1/auth/register \
+  -H "Content-Type: application/json" \
+  -d '{"email":"user@example.com","username":"user","password":"secret123"}'
+
+# Вход
+curl -X POST http://127.0.0.1:8000/api/v1/auth/login \
+  -H "Content-Type: application/x-www-form-urlencoded" \
+  -d "username=user&password=secret123"
+
+# Создать задачу (подставить TOKEN из login)
+curl -X POST http://127.0.0.1:8000/api/v1/tasks \
+  -H "Authorization: Bearer TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{"title":"Моя задача","description":"Описание"}'
+```
 
 ## Тесты
 
