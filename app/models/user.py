@@ -1,7 +1,14 @@
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
 from sqlalchemy import String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.database import Base
+
+if TYPE_CHECKING:
+    from app.models.task import Task
 
 
 class User(Base):
@@ -12,4 +19,4 @@ class User(Base):
     username: Mapped[str] = mapped_column(String(100), unique=True, index=True)
     hashed_password: Mapped[str] = mapped_column(String(255))
 
-    tasks: Mapped[list["Task"]] = relationship("Task", back_populates="owner")
+    tasks: Mapped[list[Task]] = relationship("Task", back_populates="owner")
